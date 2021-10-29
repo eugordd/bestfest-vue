@@ -1,0 +1,34 @@
+$container: 1440px;
+$container-padding: 15px;
+
+@mixin for-size($breakpoint) {
+  @if $breakpoint == xs-only {
+    @media (max-width: 688px) {
+      @content
+    }
+  } @else if $breakpoint == xs-sm {
+    @media (max-width: 992px) {
+      @content
+    }
+  } @else if $breakpoint == sm {
+    @media (min-width: 688px) {
+      @content
+    }
+  } @else if $breakpoint == sm-only {
+    @media (min-width: 688px) and (max-width: 992px) {
+      @content
+    }
+  } @else if $breakpoint == md-only {
+    @media (min-width: 992px) and (max-width: 1440px) {
+      @content
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: 992px) {
+      @content
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: 1440px) {
+      @content
+    }
+  }
+}

@@ -1,13 +1,30 @@
 <template>
-    <router-view />
+  <router-view />
 </template>
 
 <script>
 export default {
-    name: 'App'
+  name: 'App'
 };
 </script>
 
-<style>
+<style lang="scss">
+body {
+  margin: 0;
+  font-family: Nunito, sans-serif;
 
+  &.modal-opened {
+    overflow: hidden;
+  }
+}
+
+div {
+  box-sizing: border-box;
+}
+
+img {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
 </style>

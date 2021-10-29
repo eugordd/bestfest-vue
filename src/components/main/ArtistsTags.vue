@@ -1,12 +1,12 @@
 <template>
-    <div class="admin">
-        admin
-    </div>
+  <div class="artists-tags">
+    sadasd
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Admin'
+  name: 'ArtistsTags'
 };
 </script>
 
