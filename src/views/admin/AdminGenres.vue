@@ -28,23 +28,45 @@
           </span>
         </template>
       </el-table-column>
+      <el-table-column width="90">
+        <template slot-scope="scope">
+          <el-button
+            type="primary"
+            icon="el-icon-edit"
+            size="mini"
+            circle
+            @click="doEdit(scope.row._id)"
+          />
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            size="mini"
+            circle
+            @click="doDelete(scope.row._id)"
+          />
+        </template>
+      </el-table-column>
     </el-table>
-    <div style="margin-top: 20px">
-      <el-button
-        type="primary"
-        @click="a_openModal('genreCRUD')"
-      >
-        Add new genre
-      </el-button>
-      <el-button
-        v-if="selected.length"
-        type="primary"
-        @click="deleteSelected"
-      >
-        Delete selected
-      </el-button>
+    <div class="admin-genres__buttons">
+      <div>
+        <el-button
+          v-if="selected.length"
+          type="primary"
+          @click="deleteSelected"
+        >
+          Delete
+        </el-button>
+      </div>
+      <div>
+        <el-button
+          type="primary"
+          @click="doAdd"
+        >
+          Add
+        </el-button>
+      </div>
     </div>
-    <!--    <genre-modal :genre-id="editGenreId" />-->
+    <genre-modal :genre-id="editGenreId" />
   </div>
 </template>
 
@@ -57,22 +79,18 @@ export default {
   components: { GenreModal },
   data() {
     return {
-      newGenre: {
-        name: '',
-        symlinks: []
-      },
       editGenreId: null,
       selected: []
     };
   },
   computed: {
-    ...mapState('admin', ['genres']),
+    ...mapState('admin/genre', ['genres']),
   },
   created() {
-    this.a_getGenres();
+    this.a_getGenresList();
   },
   methods: {
-    ...mapActions('admin', ['a_getGenres', 'a_createGenre', 'a_updateGenre', 'a_deleteGenres']),
+    ...mapActions('admin/genre', ['a_getGenresList', 'a_createGenre', 'a_updateGenre', 'a_deleteGenres']),
     ...mapActions('modals', ['a_openModal']),
     handleSelect(value) {
       this.selected = value;
@@ -82,11 +100,32 @@ export default {
         ids: this.selected.map(item => item._id)
       };
       this.a_deleteGenres(payload);
+    },
+    doAdd() {
+      this.editGenreId = null;
+      this.a_openModal('genreCRUD');
+    },
+    doEdit(genreId) {
+      this.editGenreId = genreId;
+      this.a_openModal('genreCRUD');
+    },
+    doDelete(id) {
+      const payload = {
+        ids: [id]
+      };
+      this.a_deleteGenres(payload);
     }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.admin-genres {
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+}
 
 </style>

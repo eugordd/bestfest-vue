@@ -13,7 +13,7 @@ export default {
   update({ payload, id }) {
     return API.put(`artists/${id}`, payload);
   },
-  delete({ id }) {
-    return API.delete(`artists/${id}`);
+  deleteList({ payload }) {
+    return API.post('artists/delete-list', payload);
   },
 };

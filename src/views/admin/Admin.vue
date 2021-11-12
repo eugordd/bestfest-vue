@@ -5,7 +5,7 @@
       <div class="admin__menu">
         <el-button
           type="primary"
-          icon="el-icon-search"
+          icon="el-icon-user-solid"
           :plain="!($route.name === 'admin-artists')"
           @click="handleMenuClick('admin-artists')"
         >
@@ -13,7 +13,7 @@
         </el-button>
         <el-button
           type="primary"
-          icon="el-icon-search"
+          icon="el-icon-map-location"
           :plain="!($route.name === 'admin-festivals')"
           @click="handleMenuClick('admin-festivals')"
         >
@@ -21,7 +21,7 @@
         </el-button>
         <el-button
           type="primary"
-          icon="el-icon-search"
+          icon="el-icon-mic"
           :plain="!($route.name === 'admin-genres')"
           @click="handleMenuClick('admin-genres')"
         >

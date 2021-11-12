@@ -8,7 +8,9 @@ const state = {
 };
 
 const getters = {
-
+  tokenGetter(state) {
+    return state.token;
+  }
 };
 
 const mutations = {
@@ -35,7 +37,9 @@ const actions = {
   },
   async a_logout({ state, commit }) {
     commit('m_deleteToken');
-    await router.push({ name: 'admin-login' });
+    if (router.currentRoute.name !== 'admin-login') {
+      await router.push({ name: 'admin-login' });
+    }
   }
 };
 

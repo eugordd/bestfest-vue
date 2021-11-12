@@ -1,5 +1,5 @@
 <template>
-  <ui-input
+  <el-input
     :id="id"
     :value="value"
     v-bind="$attrs"

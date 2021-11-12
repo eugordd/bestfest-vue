@@ -19,9 +19,15 @@
       v-if="isError"
       :message="error"
     />
-    <ui-button size="lg" @click="doLogin">
-      Login
-    </ui-button>
+    <div class="admin-login__footer">
+      <el-button
+        size="medium"
+        type="primary"
+        @click="doLogin"
+      >
+        Login
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -31,6 +37,7 @@ import { mapActions } from 'vuex';
 import AuthTitle from '@components/auth/AuthTitle';
 import AuthInput from '@components/auth/AuthInput';
 import AuthMessage from '@components/auth/AuthMessage';
+import { getErrorText } from '@global/helpers';
 
 export default {
   name: 'AdminLogin',
@@ -48,7 +55,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('adminAuth', ['a_login']),
+    ...mapActions('admin/auth', ['a_login']),
     async doLogin() {
       try {
         const payload = {
@@ -58,7 +65,8 @@ export default {
         await this.a_login(payload);
         this.error = '';
       } catch (e) {
-        this.error = e?.response?.data?.message;
+        console.log(e);
+        this.error = getErrorText(e);
       }
     }
   }

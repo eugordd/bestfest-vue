@@ -1,9 +1,13 @@
 <template>
   <app-header>
     <template v-slot:right>
-      <ui-button @click="doLogout">
+      <el-button
+        type="primary"
+        size="mini"
+        @click="doLogout"
+      >
         Log Out
-      </ui-button>
+      </el-button>
     </template>
   </app-header>
 </template>
@@ -15,7 +19,7 @@ export default {
   name: 'AdminHeader',
   components: { AppHeader },
   methods: {
-    ...mapActions('adminAuth', ['a_logout']),
+    ...mapActions('admin/auth', ['a_logout']),
     doLogout() {
       this.a_logout();
     }
