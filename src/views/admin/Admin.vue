@@ -14,8 +14,8 @@
         <el-button
           type="primary"
           icon="el-icon-map-location"
-          :plain="!($route.name === 'admin-festivals')"
-          @click="handleMenuClick('admin-festivals')"
+          :plain="!($route.name === 'admin-festival')"
+          @click="handleMenuClick('admin-festival')"
         >
           Festivals
         </el-button>
@@ -41,7 +41,7 @@ export default {
   components: { AdminHeader },
   methods: {
     handleMenuClick(name) {
-      this.$router.push({ name });
+      if (this.$route.name !== name) this.$router.push({ name });
     }
   }
 };

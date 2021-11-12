@@ -14,6 +14,6 @@ export default {
     return API.put(`artists/${id}`, payload);
   },
   deleteList({ payload }) {
-    return API.post('artists/delete-list', payload);
+    return API.post('artist/delete-list', payload);
   },
 };

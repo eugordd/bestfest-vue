@@ -3,9 +3,9 @@ import VueRouter from 'vue-router';
 
 import Main from '@views/Main';
 import Admin from '@views/admin/Admin';
-import AdminArtists from '@views/admin/AdminArtists';
-import AdminFestivals from '@views/admin/AdminFestivals';
-import AdminGenres from '@views/admin/AdminGenres';
+import AdminArtistsList from '@views/admin/AdminArtistsList';
+import AdminFestivalsList from '@views/admin/AdminFestivalsList';
+import AdminGenresList from '@views/admin/AdminGenresList';
 import AdminLogin from '@views/auth/AdminLogin';
 import Auth from '@views/auth/Auth';
 
@@ -40,17 +40,17 @@ const routes = [
       {
         path: 'admin-artists',
         name: 'admin-artists',
-        component: AdminArtists
+        component: AdminArtistsList
       },
       {
-        path: 'admin-festivals',
-        name: 'admin-festivals',
-        component: AdminFestivals
+        path: 'admin-festival',
+        name: 'admin-festival',
+        component: AdminFestivalsList
       },
       {
         path: 'admin-genres',
         name: 'admin-genres',
-        component: AdminGenres
+        component: AdminGenresList
       }
     ]
   },

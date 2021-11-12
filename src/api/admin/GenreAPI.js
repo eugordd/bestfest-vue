@@ -14,6 +14,6 @@ export default {
     return API.put(`genres/${id}`, payload);
   },
   deleteList({ payload }) {
-    return API.post('genres/delete-list', payload);
+    return API.post('genre/delete-list', payload);
   },
 };

@@ -90,7 +90,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import FestivalModal from '@components/admin/festivals/FestivalModal';
+import FestivalModal from '@components/admin/festival/FestivalModal';
 
 export default {
   name: 'AdminGenres',

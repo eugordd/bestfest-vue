@@ -1,8 +1,8 @@
 <template>
-  <div class="admin-genres">
+  <div class="admin-artists">
     <el-table
       ref="multipleTable"
-      :data="genres"
+      :data="artistsList"
       style="width: 100%"
       @selection-change="handleSelect"
     >
@@ -16,15 +16,15 @@
         width="120"
       />
       <el-table-column
-        property="symlinks"
-        label="Symlinks"
+        property="genres"
+        label="Genres"
       >
         <template slot-scope="scope">
           <span
-            v-for="(symlink, index) in scope.row.symlinks"
+            v-for="(genre, index) in scope.row.genres"
             :key="index"
           >
-            {{ symlink }},
+            {{ genre }},
           </span>
         </template>
       </el-table-column>
@@ -47,7 +47,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="admin-genres__buttons">
+    <div class="admin-artist__buttons">
       <div>
         <el-button
           v-if="selected.length"
@@ -66,31 +66,31 @@
         </el-button>
       </div>
     </div>
-    <genre-modal :genre-id="editGenreId" />
+    <artist-modal :artist-id="editArtistId" />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import GenreModal from '@components/admin/genres/GenreModal';
+import ArtistModal from '@components/admin/artist/ArtistModal';
 
 export default {
-  name: 'AdminGenres',
-  components: { GenreModal },
+  name: 'AdminArtists',
+  components: { ArtistModal },
   data() {
     return {
-      editGenreId: null,
+      editArtistId: null,
       selected: []
     };
   },
   computed: {
-    ...mapState('admin/genre', ['genres']),
+    ...mapState('admin/artist', ['artistsList']),
   },
   created() {
-    this.a_getGenresList();
+    this.a_getArtistsList();
   },
   methods: {
-    ...mapActions('admin/genre', ['a_getGenresList', 'a_createGenre', 'a_updateGenre', 'a_deleteGenres']),
+    ...mapActions('admin/artist', ['a_getArtistsList', 'a_createArtist', 'a_updateArtist', 'a_deleteArtists']),
     ...mapActions('modals', ['a_openModal']),
     handleSelect(value) {
       this.selected = value;
@@ -99,28 +99,28 @@ export default {
       const payload = {
         ids: this.selected.map(item => item._id)
       };
-      this.a_deleteGenres(payload);
+      this.a_deleteArtists(payload);
     },
     doAdd() {
-      this.editGenreId = null;
-      this.a_openModal('genreCRUD');
+      this.editArtistId = null;
+      this.a_openModal('artistCRUD');
     },
-    doEdit(genreId) {
-      this.editGenreId = genreId;
-      this.a_openModal('genreCRUD');
+    doEdit(artistId) {
+      this.editArtistId = artistId;
+      this.a_openModal('artistCRUD');
     },
     doDelete(id) {
       const payload = {
         ids: [id]
       };
-      this.a_deleteGenres(payload);
+      this.a_deleteArtists(payload);
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
-.admin-genres {
+.admin-artist {
   &__buttons {
     display: flex;
     justify-content: space-between;

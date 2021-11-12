@@ -9,27 +9,34 @@
       <el-form-item label="Name">
         <el-input v-model="form.name" />
       </el-form-item>
-      <el-form-item label="Symlinks">
+      <el-form-item label="Genres">
         <el-select
           multiple
           filterable
           allow-create
           default-first-option
-          placeholder="Add genre symlinks"
+          placeholder="Add artist genre"
           no-data-text="Type and press enter"
-          v-model="form.symlinks"
-        />
+          v-model="form.genres"
+        >
+          <el-option
+            v-for="item in genres"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button
-          v-if="genreId"
+          v-if="artistId"
           type="primary"
           @click="editGenre"
         >
           Edit
         </el-button>
         <el-button
-          v-if="!genreId"
+          v-if="!artistId"
           type="primary"
           @click="addGenre"
         >
@@ -44,19 +51,19 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
-  name: 'GenreModal',
+  name: 'ArtistModal',
   props: {
-    genreId: {
+    artistId: {
       type: String,
       default: ''
     }
   },
   data() {
     return {
-      modalName: 'genreCRUD',
+      modalName: 'artistCrud',
       form: {
         name: '',
         symlinks: []
@@ -65,16 +72,23 @@ export default {
   },
   computed: {
     ...mapGetters('modals', ['isModalOpened']),
+    ...mapState('admin/genre', ['genres']),
     header() {
-      return this.genreId ? 'Edit genre' : 'Add genre';
+      return this.artistId ? 'Edit artist' : 'Add artist';
     }
   },
   methods: {
     ...mapActions('modals', ['a_closeModal']),
-    ...mapActions('admin/genre', ['a_createGenre', 'a_updateGenre','a_getGenre']),
+    ...mapActions('admin/genre', ['a_getGenresList']),
+    ...mapActions('admin/artist', ['a_getArtist', 'a_createArtist', 'a_updateArtist']),
+    getData() {
+      this.a_getGenresList();
+    },
     async onModalOpen() {
-      if (this.genreId) {
-        const { genre } = await this.a_getGenre({ id: this.genreId });
+      this.getData();
+
+      if (this.artistId) {
+        const { genre } = await this.a_getArtist({ id: this.artistId });
         this.form = {
           name: genre.name,
           symlinks: genre.symlinks
@@ -101,7 +115,7 @@ export default {
       const payload = {
         name: this.form.name,
         symlinks: this.form.symlinks,
-        id: this.genreId
+        id: this.artistId
       };
       await this.a_updateGenre(payload);
       this.closeModal();

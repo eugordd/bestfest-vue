@@ -36,7 +36,7 @@
           v-model="form.artists"
         >
           <el-option
-            v-for="item in artists"
+            v-for="item in artistsList"
             :key="item.name"
             :label="item.name"
             :value="item.name"
@@ -91,7 +91,7 @@ export default {
   computed: {
     ...mapGetters('modals', ['isModalOpened']),
     ...mapState('admin/genre', ['genres']),
-    ...mapState('admin/artist', ['artists']),
+    ...mapState('admin/artist', ['artistsList']),
     header() {
       return this.festivalId ? 'Edit festival' : 'Add festival';
     }

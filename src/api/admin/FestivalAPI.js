@@ -14,6 +14,6 @@ export default {
     return API.put(`festivals/${id}`, payload);
   },
   deleteList({ payload }) {
-    return API.post('festivals/delete-list', payload);
+    return API.post('festival/delete-list', payload);
   },
 };

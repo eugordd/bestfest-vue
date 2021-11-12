@@ -1,8 +1,8 @@
 <template>
-  <div class="admin-artists">
+  <div class="admin-genres">
     <el-table
       ref="multipleTable"
-      :data="artists"
+      :data="genres"
       style="width: 100%"
       @selection-change="handleSelect"
     >
@@ -47,7 +47,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="admin-artist__buttons">
+    <div class="admin-genres__buttons">
       <div>
         <el-button
           v-if="selected.length"
@@ -66,31 +66,31 @@
         </el-button>
       </div>
     </div>
-    <artist-modal :artist-id="editArtistId" />
+    <genre-modal :genre-id="editGenreId" />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import ArtistModal from '@components/admin/artist/ArtistModal';
+import GenreModal from '@components/admin/genre/GenreModal';
 
 export default {
-  name: 'AdminArtists',
-  components: { ArtistModal },
+  name: 'AdminGenres',
+  components: { GenreModal },
   data() {
     return {
-      editArtistId: null,
+      editGenreId: null,
       selected: []
     };
   },
   computed: {
-    ...mapState('admin/artist', ['artists']),
+    ...mapState('admin/genre', ['genres']),
   },
   created() {
-    this.a_getArtistsList();
+    this.a_getGenresList();
   },
   methods: {
-    ...mapActions('admin/artist', ['a_getArtistsList', 'a_createArtist', 'a_updateArtist', 'a_deleteArtists']),
+    ...mapActions('admin/genre', ['a_getGenresList', 'a_createGenre', 'a_updateGenre', 'a_deleteGenres']),
     ...mapActions('modals', ['a_openModal']),
     handleSelect(value) {
       this.selected = value;
@@ -99,28 +99,28 @@ export default {
       const payload = {
         ids: this.selected.map(item => item._id)
       };
-      this.a_deleteArtists(payload);
+      this.a_deleteGenres(payload);
     },
     doAdd() {
-      this.editArtistId = null;
-      this.a_openModal('artistCRUD');
+      this.editGenreId = null;
+      this.a_openModal('genreCRUD');
     },
-    doEdit(artistId) {
-      this.editArtistId = artistId;
-      this.a_openModal('artistCRUD');
+    doEdit(genreId) {
+      this.editGenreId = genreId;
+      this.a_openModal('genreCRUD');
     },
     doDelete(id) {
       const payload = {
         ids: [id]
       };
-      this.a_deleteArtists(payload);
+      this.a_deleteGenres(payload);
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
-.admin-artist {
+.admin-genres {
   &__buttons {
     display: flex;
     justify-content: space-between;

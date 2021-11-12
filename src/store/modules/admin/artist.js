@@ -1,7 +1,7 @@
 import ArtistAPI from '@api/admin/ArtistAPI';
 
 const state = {
-  artists: []
+  artistsList: []
 };
 
 const getters = {
@@ -10,11 +10,15 @@ const getters = {
 
 const mutations = {
   m_setArtists(state, artists) {
-    state.artists = artists;
+    state.artistsList = artists;
   }
 };
 
 const actions = {
+  async a_getArtist({ commit }, { id }) {
+    const { data } = await ArtistAPI.get({ id });
+    return data;
+  },
   async a_getArtistsList({ commit }) {
     const { data } = await ArtistAPI.getList();
     commit('m_setArtists', data.artists);
