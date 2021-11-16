@@ -9,6 +9,13 @@
       <el-form-item label="Name">
         <el-input v-model="form.name" />
       </el-form-item>
+      <el-form-item label="Description">
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 4}"
+          v-model="form.description"
+        />
+      </el-form-item>
       <el-form-item label="Genres">
         <el-select
           multiple
@@ -20,9 +27,25 @@
         >
           <el-option
             v-for="item in genres"
-            :key="item.name"
+            :key="item._id"
             :label="item.name"
-            :value="item.name"
+            :value="item._id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="Country">
+        <el-select
+          filterable
+          allow-create
+          default-first-option
+          placeholder="Country"
+          v-model="form.country"
+        >
+          <el-option
+            v-for="item in countriesList"
+            :key="item[0]"
+            :label="item[1].name"
+            :value="item[0]"
           />
         </el-select>
       </el-form-item>
@@ -37,9 +60,9 @@
         >
           <el-option
             v-for="item in artistsList"
-            :key="item.name"
+            :key="item._id"
             :label="item.name"
-            :value="item.name"
+            :value="item._id"
           />
         </el-select>
       </el-form-item>
@@ -68,6 +91,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
+import { countries } from 'countries-list';
 
 export default {
   name: 'FestivalModal',
@@ -83,6 +107,7 @@ export default {
       form: {
         name: '',
         description: '',
+        country: '',
         genres: [],
         artists: []
       }
@@ -94,6 +119,9 @@ export default {
     ...mapState('admin/artist', ['artistsList']),
     header() {
       return this.festivalId ? 'Edit festival' : 'Add festival';
+    },
+    countriesList() {
+      return Object.entries(countries);
     }
   },
   methods: {
@@ -113,6 +141,7 @@ export default {
         this.form = {
           name: festival.name,
           description: festival.description,
+          country: festival.country,
           genres: festival.genres,
           artists: festival.artists
         };
@@ -120,6 +149,7 @@ export default {
         this.form = {
           name: '',
           description: '',
+          country: '',
           genres: [],
           artists: []
         };
@@ -132,6 +162,7 @@ export default {
       const payload = {
         name: this.form.name,
         description: this.form.description,
+        country: this.form.country,
         genres: this.form.genres,
         artists: this.form.artists,
       };
@@ -142,6 +173,7 @@ export default {
       const payload = {
         name: this.form.name,
         description: this.form.description,
+        country: this.form.country,
         genres: this.form.genres,
         artists: this.form.artists,
         id: this.festivalId

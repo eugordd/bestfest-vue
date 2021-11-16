@@ -16,6 +16,19 @@
         width="120"
       />
       <el-table-column
+        property="description"
+        label="Description"
+        width="400"
+      />
+      <el-table-column
+        label="Country"
+        width="200"
+      >
+        <template slot-scope="scope">
+          <span>{{ formatCountry(scope.row.country) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         property="genres"
         label="Genres"
       >
@@ -24,7 +37,7 @@
             v-for="(genre, index) in scope.row.genres"
             :key="index"
           >
-            {{ genre }},
+            {{ genre.name }},
           </span>
         </template>
       </el-table-column>
@@ -47,6 +60,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="ui-pagination">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="artistsCount"
+        :page-size="pagination.limit"
+        :current-page.sync="pagination.page"
+        @current-change="getPaginatedData"
+      />
+    </div>
     <div class="admin-artist__buttons">
       <div>
         <el-button
@@ -73,6 +96,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import ArtistModal from '@components/admin/artist/ArtistModal';
+import { continents, countries } from 'countries-list';
 
 export default {
   name: 'AdminArtists',
@@ -80,18 +104,32 @@ export default {
   data() {
     return {
       editArtistId: null,
-      selected: []
+      selected: [],
+      pagination: {
+        page: 1,
+        limit: 2,
+      }
     };
   },
   computed: {
-    ...mapState('admin/artist', ['artistsList']),
+    ...mapState('admin/artist', ['artistsList', 'artistsCount']),
+    countries() {
+      return countries;
+    }
   },
   created() {
-    this.a_getArtistsList();
+    this.getPaginatedData();
   },
   methods: {
     ...mapActions('admin/artist', ['a_getArtistsList', 'a_createArtist', 'a_updateArtist', 'a_deleteArtists']),
     ...mapActions('modals', ['a_openModal']),
+    getPaginatedData() {
+      const params = {
+        page: this.pagination.page,
+        limit: this.pagination.limit
+      };
+      this.a_getArtistsList({ params });
+    },
     handleSelect(value) {
       this.selected = value;
     },
@@ -114,6 +152,10 @@ export default {
         ids: [id]
       };
       this.a_deleteArtists(payload);
+    },
+    formatCountry(code) {
+      const country = countries[code];
+      return `${continents[country.continent]}, ${country.name} ${country.emoji}`;
     }
   }
 };

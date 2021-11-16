@@ -1,7 +1,8 @@
 const state = {
   modals: {
     genreCRUD: false,
-    festivalCRUD: false
+    festivalCRUD: false,
+    artistCRUD: false
   }
 };
 

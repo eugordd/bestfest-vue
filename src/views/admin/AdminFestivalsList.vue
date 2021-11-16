@@ -18,8 +18,16 @@
       <el-table-column
         property="description"
         label="Description"
-        width="200"
+        width="400"
       />
+      <el-table-column
+        label="Country"
+        width="200"
+      >
+        <template slot-scope="scope">
+          <span>{{ formatCountry(scope.row.country) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         property="genres"
         label="Genres"
@@ -29,7 +37,7 @@
             v-for="(genre, index) in scope.row.genres"
             :key="index"
           >
-            {{ genre }},
+            {{ genre.name }},
           </span>
         </template>
       </el-table-column>
@@ -42,7 +50,7 @@
             v-for="(artist, index) in scope.row.artists"
             :key="index"
           >
-            {{ artist }},
+            {{ artist.name }},
           </span>
         </template>
       </el-table-column>
@@ -91,6 +99,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import FestivalModal from '@components/admin/festival/FestivalModal';
+import { continents, countries } from 'countries-list';
 
 export default {
   name: 'AdminGenres',
@@ -132,6 +141,10 @@ export default {
         ids: [id]
       };
       this.a_deleteFestivals(payload);
+    },
+    formatCountry(code) {
+      const country = countries[code];
+      return `${continents[country.continent]}, ${country.name} ${country.emoji}`;
     }
   }
 };

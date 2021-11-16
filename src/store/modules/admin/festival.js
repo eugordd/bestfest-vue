@@ -23,20 +23,22 @@ const actions = {
     const { data } = await FestivalAPI.getList();
     commit('m_setFestivals', data.festivals);
   },
-  async a_createFestival({ dispatch }, { name, description, genres, artists }) {
+  async a_createFestival({ dispatch }, { name, description, country, genres, artists }) {
     const payload = {
       name,
       description,
+      country,
       genres,
       artists
     };
     const { data } = await FestivalAPI.create({ payload });
     dispatch('a_getFestivalsList');
   },
-  async a_updateFestival({ dispatch }, { id, name, description, genres, artists }) {
+  async a_updateFestival({ dispatch }, { id, name, description, country, genres, artists }) {
     const payload = {
       name,
       description,
+      country,
       genres,
       artists
     };

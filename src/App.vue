@@ -16,6 +16,14 @@ body {
   &.modal-opened {
     overflow: hidden;
   }
+
+  textarea {
+    font-family: Nunito, sans-serif;
+  }
+
+  input {
+    font-family: Nunito, sans-serif;
+  }
 }
 
 div {

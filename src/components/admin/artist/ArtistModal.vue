@@ -9,6 +9,13 @@
       <el-form-item label="Name">
         <el-input v-model="form.name" />
       </el-form-item>
+      <el-form-item label="Description">
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 4}"
+          v-model="form.description"
+        />
+      </el-form-item>
       <el-form-item label="Genres">
         <el-select
           multiple
@@ -21,9 +28,25 @@
         >
           <el-option
             v-for="item in genres"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item._id"
+            :label="item.name"
+            :value="item._id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="Country">
+        <el-select
+          filterable
+          allow-create
+          default-first-option
+          placeholder="Country"
+          v-model="form.country"
+        >
+          <el-option
+            v-for="item in countriesList"
+            :key="item[0]"
+            :label="item[1].name"
+            :value="item[0]"
           />
         </el-select>
       </el-form-item>
@@ -52,6 +75,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
+import { countries } from 'countries-list';
 
 export default {
   name: 'ArtistModal',
@@ -63,16 +87,21 @@ export default {
   },
   data() {
     return {
-      modalName: 'artistCrud',
+      modalName: 'artistCRUD',
       form: {
         name: '',
-        symlinks: []
+        description: '',
+        country: '',
+        genres: []
       }
     };
   },
   computed: {
     ...mapGetters('modals', ['isModalOpened']),
     ...mapState('admin/genre', ['genres']),
+    countriesList() {
+      return Object.entries(countries);
+    },
     header() {
       return this.artistId ? 'Edit artist' : 'Add artist';
     }
@@ -88,15 +117,19 @@ export default {
       this.getData();
 
       if (this.artistId) {
-        const { genre } = await this.a_getArtist({ id: this.artistId });
+        const { artist } = await this.a_getArtist({ id: this.artistId });
         this.form = {
-          name: genre.name,
-          symlinks: genre.symlinks
+          name: artist.name,
+          description: artist.description,
+          country: artist.country,
+          genres: artist.genres
         };
       } else {
         this.form = {
           name: '',
-          symlinks: []
+          description: '',
+          country: '',
+          genres: []
         };
       }
     },
@@ -106,18 +139,22 @@ export default {
     async addGenre() {
       const payload = {
         name: this.form.name,
-        symlinks: this.form.symlinks
+        description: this.form.description,
+        country: this.form.country,
+        genres: this.form.genres
       };
-      await this.a_createGenre(payload);
+      await this.a_createArtist(payload);
       this.closeModal();
     },
     async editGenre() {
       const payload = {
         name: this.form.name,
-        symlinks: this.form.symlinks,
+        description: this.form.description,
+        country: this.form.country,
+        genres: this.form.genres,
         id: this.artistId
       };
-      await this.a_updateGenre(payload);
+      await this.a_updateArtist(payload);
       this.closeModal();
     }
   }
