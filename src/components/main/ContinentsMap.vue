@@ -8,8 +8,8 @@
     <g
       id="africa"
       transform="matrix(1.6963e-2,0,0,-1.6963e-2,0,239)"
-      :class="{'continents-map__checked': continents.includes('africa')}"
-      @click="chooseContinent('africa')"
+      :class="{'continents-map__checked': continents.includes('AF')}"
+      @click="chooseContinent('AF')"
     >
       <path
         id="path2330"
@@ -23,8 +23,8 @@
     <g
       id="asia"
       transform="matrix(1.6963e-2,0,0,-1.6963e-2,0,239)"
-      :class="{'continents-map__checked': continents.includes('asia')}"
-      @click="chooseContinent('asia')"
+      :class="{'continents-map__checked': continents.includes('AS')}"
+      @click="chooseContinent('AS')"
     >
       <path
         id="path2335"
@@ -102,8 +102,8 @@
     <g
       id="australia"
       transform="matrix(1.6963e-2,0,0,-1.6963e-2,0,239)"
-      :class="{'continents-map__checked': continents.includes('australia')}"
-      @click="chooseContinent('australia')"
+      :class="{'continents-map__checked': continents.includes('OC')}"
+      @click="chooseContinent('OC')"
     >
       <path
         id="path2372"
@@ -121,8 +121,8 @@
     <g
       id="europe"
       transform="matrix(1.6963e-2,0,0,-1.6963e-2,0,239)"
-      :class="{'continents-map__checked': continents.includes('europe')}"
-      @click="chooseContinent('europe')"
+      :class="{'continents-map__checked': continents.includes('EU')}"
+      @click="chooseContinent('EU')"
     >
       <path
         id="path2379"
@@ -172,8 +172,8 @@
     <g
       id="south_america"
       transform="matrix(1.6963e-2,0,0,-1.6963e-2,0,239)"
-      :class="{'continents-map__checked': continents.includes('south-america')}"
-      @click="chooseContinent('south-america')"
+      :class="{'continents-map__checked': continents.includes('SA')}"
+      @click="chooseContinent('SA')"
     >
       <path
         id="path2402"
@@ -187,8 +187,8 @@
     <g
       id="north_america"
       transform="matrix(1.6963e-2,0,0,-1.6963e-2,0,239)"
-      :class="{'continents-map__checked': continents.includes('north-america')}"
-      @click="chooseContinent('north-america')"
+      :class="{'continents-map__checked': continents.includes('NA')}"
+      @click="chooseContinent('NA')"
     >
       <path
         id="path2407"

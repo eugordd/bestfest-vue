@@ -4,25 +4,22 @@
     <ui-container class="admin__container">
       <div class="admin__menu">
         <el-button
-          type="primary"
+          :type="$route.name === 'admin-artists' ? 'primary' : 'default'"
           icon="el-icon-user-solid"
-          :plain="!($route.name === 'admin-artists')"
           @click="handleMenuClick('admin-artists')"
         >
           Artists
         </el-button>
         <el-button
-          type="primary"
+          :type="$route.name === 'admin-festival' ? 'primary' : 'default'"
           icon="el-icon-map-location"
-          :plain="!($route.name === 'admin-festival')"
           @click="handleMenuClick('admin-festival')"
         >
           Festivals
         </el-button>
         <el-button
-          type="primary"
+          :type="$route.name === 'admin-genres' ? 'primary' : 'default'"
           icon="el-icon-mic"
-          :plain="!($route.name === 'admin-genres')"
           @click="handleMenuClick('admin-genres')"
         >
           Genres

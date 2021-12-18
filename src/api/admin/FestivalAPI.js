@@ -1,8 +1,8 @@
 import API from '@api/admin';
 
 export default {
-  getList() {
-    return API.get('festivals');
+  getList({ params }) {
+    return API.get('festivals', { params });
   },
   get({ id }) {
     return API.get(`festivals/${id}`);
@@ -14,6 +14,6 @@ export default {
     return API.put(`festivals/${id}`, payload);
   },
   deleteList({ payload }) {
-    return API.post('festival/delete-list', payload);
+    return API.post('festivals/delete-list', payload);
   },
 };

@@ -26,7 +26,7 @@
           v-model="form.genres"
         >
           <el-option
-            v-for="item in genres"
+            v-for="item in genresListNotDetailed"
             :key="item._id"
             :label="item.name"
             :value="item._id"
@@ -36,7 +36,6 @@
       <el-form-item label="Country">
         <el-select
           filterable
-          allow-create
           default-first-option
           placeholder="Country"
           v-model="form.country"
@@ -49,6 +48,17 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="Place">
+        <el-input v-model="form.place" />
+      </el-form-item>
+      <el-form-item>
+        <el-date-picker
+          type="daterange"
+          start-placeholder="Start Date"
+          end-placeholder="End Date"
+          v-model="form.period"
+        />
+      </el-form-item>
       <el-form-item label="Artists">
         <el-select
           multiple
@@ -59,7 +69,7 @@
           v-model="form.artists"
         >
           <el-option
-            v-for="item in artistsList"
+            v-for="item in artistsListNotDetailed"
             :key="item._id"
             :label="item.name"
             :value="item._id"
@@ -108,6 +118,8 @@ export default {
         name: '',
         description: '',
         country: '',
+        place: '',
+        period: [],
         genres: [],
         artists: []
       }
@@ -115,8 +127,8 @@ export default {
   },
   computed: {
     ...mapGetters('modals', ['isModalOpened']),
-    ...mapState('admin/genre', ['genres']),
-    ...mapState('admin/artist', ['artistsList']),
+    ...mapState('admin/genre', ['genresListNotDetailed']),
+    ...mapState('admin/artist', ['artistsListNotDetailed']),
     header() {
       return this.festivalId ? 'Edit festival' : 'Add festival';
     },
@@ -126,30 +138,36 @@ export default {
   },
   methods: {
     ...mapActions('modals', ['a_closeModal']),
-    ...mapActions('admin/genre', ['a_getGenresList']),
-    ...mapActions('admin/artist', ['a_getArtistsList']),
+    ...mapActions('admin/genre', ['a_getGenresListNotDetailed']),
+    ...mapActions('admin/artist', ['a_getArtistsListNotDetailed']),
     ...mapActions('admin/festival', ['a_getFestival', 'a_createFestival', 'a_updateFestival']),
     getData() {
-      this.a_getArtistsList();
-      this.a_getGenresList();
+      this.a_getArtistsListNotDetailed();
+      this.a_getGenresListNotDetailed();
     },
     async onModalOpen() {
       this.getData();
 
       if (this.festivalId) {
-        const { festival } = await this.a_getFestival({ id: this.festivalId });
+        const { festival: { artists, country, dateEnd, dateStart, description, genres, name, place } } =
+          await this.a_getFestival({ id: this.festivalId });
+
         this.form = {
-          name: festival.name,
-          description: festival.description,
-          country: festival.country,
-          genres: festival.genres,
-          artists: festival.artists
+          name,
+          description,
+          country,
+          place,
+          period: [dateStart, dateEnd],
+          genres,
+          artists: artists.map(item => item._id)
         };
       } else {
         this.form = {
           name: '',
           description: '',
           country: '',
+          place: '',
+          period: [],
           genres: [],
           artists: []
         };
@@ -163,6 +181,9 @@ export default {
         name: this.form.name,
         description: this.form.description,
         country: this.form.country,
+        place: this.form.place,
+        dateStart: this.form?.period[0],
+        dateEnd: this.form?.period[1],
         genres: this.form.genres,
         artists: this.form.artists,
       };
@@ -174,6 +195,9 @@ export default {
         name: this.form.name,
         description: this.form.description,
         country: this.form.country,
+        place: this.form.place,
+        dateStart: this.form?.period?.[0],
+        dateEnd: this.form?.period?.[1],
         genres: this.form.genres,
         artists: this.form.artists,
         id: this.festivalId

@@ -1,7 +1,9 @@
 import GenreAPI from '@api/admin/GenreAPI';
 
 const state = {
-  genres: []
+  genresList: [],
+  genresCount: 0,
+  genresListNotDetailed: []
 };
 
 const getters = {
@@ -9,8 +11,12 @@ const getters = {
 };
 
 const mutations = {
-  m_setGenres(state, genres) {
-    state.genres = genres;
+  m_setGenres(state, { genres, count }) {
+    state.genresList = genres;
+    state.genresCount = count;
+  },
+  m_setGenresNotDetailed(state, genres) {
+    state.genresListNotDetailed = genres;
   }
 };
 
@@ -19,9 +25,21 @@ const actions = {
     const { data } = await GenreAPI.get({ id });
     return data;
   },
-  async a_getGenresList({ commit }) {
-    const { data } = await GenreAPI.getList();
-    commit('m_setGenres', data.genres);
+  async a_getGenresList({ commit }, rawParams) {
+    const params = {
+      page: rawParams?.page || 1,
+      limit: rawParams?.limit || 20,
+      search: rawParams?.search
+    };
+    const { data } = await GenreAPI.getList(params);
+    const { genres, pagination } = data;
+
+    commit('m_setGenres', { genres, count: pagination.total });
+  },
+  async a_getGenresListNotDetailed({ commit }) {
+    const { data } = await GenreAPI.getListNotDetailed();
+    const { genres } = data;
+    commit('m_setGenresNotDetailed', genres);
   },
   async a_createGenre({ dispatch }, { name, symlinks }) {
     const payload = { name, symlinks };

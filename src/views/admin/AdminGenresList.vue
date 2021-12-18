@@ -1,8 +1,9 @@
 <template>
   <div class="admin-genres">
+    <admin-search @change="handleSearch" />
     <el-table
       ref="multipleTable"
-      :data="genres"
+      :data="genresList"
       style="width: 100%"
       @selection-change="handleSelect"
     >
@@ -66,6 +67,13 @@
         </el-button>
       </div>
     </div>
+    <ui-pagination
+      :total="genresCount"
+      :limits-list="[20, 50, 100]"
+      :limit.sync="pagination.limit"
+      :page.sync="pagination.page"
+      @change="getPaginatedData"
+    />
     <genre-modal :genre-id="editGenreId" />
   </div>
 </template>
@@ -73,25 +81,48 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import GenreModal from '@components/admin/genre/GenreModal';
+import AdminSearch from '@views/admin/AdminSearch';
+import { debounce } from 'lodash';
 
 export default {
   name: 'AdminGenres',
-  components: { GenreModal },
+  components: { AdminSearch, GenreModal },
   data() {
     return {
       editGenreId: null,
-      selected: []
+      selected: [],
+      search: '',
+      pagination: {
+        page: 1,
+        limit: 20
+      },
+      debouncedGetData: () => {}
     };
   },
   computed: {
-    ...mapState('admin/genre', ['genres']),
+    ...mapState('admin/genre', ['genresList', 'genresCount']),
   },
   created() {
-    this.a_getGenresList();
+    this.getPaginatedData();
+    this.debouncedGetData = debounce(() => {
+      this.getPaginatedData();
+    }, 400);
   },
   methods: {
     ...mapActions('admin/genre', ['a_getGenresList', 'a_createGenre', 'a_updateGenre', 'a_deleteGenres']),
     ...mapActions('modals', ['a_openModal']),
+    handleSearch(search) {
+      this.search = search;
+      this.debouncedGetData();
+    },
+    getPaginatedData() {
+      const params = {
+        page: this.pagination.page,
+        limit: this.pagination.limit,
+        search: this.search
+      };
+      this.a_getGenresList(params);
+    },
     handleSelect(value) {
       this.selected = value;
     },

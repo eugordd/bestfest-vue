@@ -20,14 +20,13 @@
         <el-select
           multiple
           filterable
-          allow-create
           default-first-option
           placeholder="Add artist genre"
           no-data-text="Type and press enter"
           v-model="form.genres"
         >
           <el-option
-            v-for="item in genres"
+            v-for="item in genresListNotDetailed"
             :key="item._id"
             :label="item.name"
             :value="item._id"
@@ -37,7 +36,6 @@
       <el-form-item label="Country">
         <el-select
           filterable
-          allow-create
           default-first-option
           placeholder="Country"
           v-model="form.country"
@@ -98,7 +96,7 @@ export default {
   },
   computed: {
     ...mapGetters('modals', ['isModalOpened']),
-    ...mapState('admin/genre', ['genres']),
+    ...mapState('admin/genre', ['genresListNotDetailed']),
     countriesList() {
       return Object.entries(countries);
     },
@@ -108,10 +106,10 @@ export default {
   },
   methods: {
     ...mapActions('modals', ['a_closeModal']),
-    ...mapActions('admin/genre', ['a_getGenresList']),
+    ...mapActions('admin/genre', ['a_getGenresListNotDetailed']),
     ...mapActions('admin/artist', ['a_getArtist', 'a_createArtist', 'a_updateArtist']),
     getData() {
-      this.a_getGenresList();
+      this.a_getGenresListNotDetailed();
     },
     async onModalOpen() {
       this.getData();

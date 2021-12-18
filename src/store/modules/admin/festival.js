@@ -1,7 +1,8 @@
 import FestivalAPI from '@api/admin/FestivalAPI';
 
 const state = {
-  festivals: []
+  festivalsList: [],
+  festivalsCount: 0
 };
 
 const getters = {
@@ -9,8 +10,9 @@ const getters = {
 };
 
 const mutations = {
-  m_setFestivals(state, festivals) {
-    state.festivals = festivals;
+  m_setFestivals(state, { festivals, count }) {
+    state.festivalsList = festivals;
+    state.festivalsCount = count;
   }
 };
 
@@ -19,26 +21,39 @@ const actions = {
     const { data } = await FestivalAPI.get({ id });
     return data;
   },
-  async a_getFestivalsList({ commit }) {
-    const { data } = await FestivalAPI.getList();
-    commit('m_setFestivals', data.festivals);
+  async a_getFestivalsList({ commit }, rawParams) {
+    const params = {
+      page: rawParams?.page || 1,
+      limit: rawParams?.limit || 20,
+      search: rawParams?.search
+    };
+
+    const { data } = await FestivalAPI.getList({ params });
+    const { festivals, pagination } = data;
+    commit('m_setFestivals', { festivals, count: pagination?.total,  });
   },
-  async a_createFestival({ dispatch }, { name, description, country, genres, artists }) {
+  async a_createFestival({ dispatch }, { name, description, country, place, dateStart, dateEnd, genres, artists }) {
     const payload = {
       name,
       description,
       country,
+      place,
+      dateStart,
+      dateEnd,
       genres,
       artists
     };
     const { data } = await FestivalAPI.create({ payload });
     dispatch('a_getFestivalsList');
   },
-  async a_updateFestival({ dispatch }, { id, name, description, country, genres, artists }) {
+  async a_updateFestival({ dispatch }, { id, name, description, country, place, dateStart, dateEnd, genres, artists }) {
     const payload = {
       name,
       description,
       country,
+      place,
+      dateStart,
+      dateEnd,
       genres,
       artists
     };

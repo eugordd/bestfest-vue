@@ -13,7 +13,7 @@
     "countries-list": "^2.6.1",
     "element-ui": "^2.15.6",
     "js-cookie": "^3.0.1",
-    "v-calendar": "^2.3.4",
+    "lodash": "^4.17.21",
     "vue": "^2.6.10",
     "vue-router": "^3.5.2",
     "vue-svg-map": "^1.2.0",

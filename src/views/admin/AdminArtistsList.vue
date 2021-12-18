@@ -1,7 +1,7 @@
 <template>
   <div class="admin-artists">
+    <admin-search @change="handleSearch" />
     <el-table
-      ref="multipleTable"
       :data="artistsList"
       style="width: 100%"
       @selection-change="handleSelect"
@@ -60,21 +60,11 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="ui-pagination">
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="artistsCount"
-        :page-size="pagination.limit"
-        :current-page.sync="pagination.page"
-        @current-change="getPaginatedData"
-      />
-    </div>
     <div class="admin-artist__buttons">
       <div>
         <el-button
           v-if="selected.length"
-          type="primary"
+          type="danger"
           @click="deleteSelected"
         >
           Delete
@@ -89,6 +79,13 @@
         </el-button>
       </div>
     </div>
+    <ui-pagination
+      :total="artistsCount"
+      :limits-list="[20, 50, 100]"
+      :limit.sync="pagination.limit"
+      :page.sync="pagination.page"
+      @change="getPaginatedData"
+    />
     <artist-modal :artist-id="editArtistId" />
   </div>
 </template>
@@ -97,18 +94,22 @@
 import { mapState, mapActions } from 'vuex';
 import ArtistModal from '@components/admin/artist/ArtistModal';
 import { continents, countries } from 'countries-list';
+import AdminSearch from '@views/admin/AdminSearch';
+import { debounce } from 'lodash';
 
 export default {
   name: 'AdminArtists',
-  components: { ArtistModal },
+  components: { AdminSearch, ArtistModal },
   data() {
     return {
       editArtistId: null,
       selected: [],
+      search: '',
       pagination: {
         page: 1,
-        limit: 2,
-      }
+        limit: 20,
+      },
+      debouncedGetData: () => {}
     };
   },
   computed: {
@@ -119,16 +120,24 @@ export default {
   },
   created() {
     this.getPaginatedData();
+    this.debouncedGetData = debounce(() => {
+      this.getPaginatedData();
+    }, 400);
   },
   methods: {
     ...mapActions('admin/artist', ['a_getArtistsList', 'a_createArtist', 'a_updateArtist', 'a_deleteArtists']),
     ...mapActions('modals', ['a_openModal']),
+    handleSearch(search) {
+      this.search = search;
+      this.debouncedGetData();
+    },
     getPaginatedData() {
       const params = {
         page: this.pagination.page,
-        limit: this.pagination.limit
+        limit: this.pagination.limit,
+        search: this.search
       };
-      this.a_getArtistsList({ params });
+      this.a_getArtistsList(params);
     },
     handleSelect(value) {
       this.selected = value;

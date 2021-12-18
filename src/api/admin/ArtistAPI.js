@@ -4,6 +4,9 @@ export default {
   getList({ params }) {
     return API.get('artists', { params });
   },
+  getListNotDetailed() {
+    return API.get('artists/not-detailed');
+  },
   get({ id }) {
     return API.get(`artists/${id}`);
   },

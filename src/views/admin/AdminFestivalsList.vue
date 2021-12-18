@@ -1,8 +1,9 @@
 <template>
   <div class="admin-festivals">
+    <admin-search @change="handleSearch" />
     <el-table
       ref="multipleTable"
-      :data="festivals"
+      :data="festivalsList"
       style="width: 100%"
       @selection-change="handleSelect"
     >
@@ -92,6 +93,13 @@
         </el-button>
       </div>
     </div>
+    <ui-pagination
+      :total="festivalsCount"
+      :limits-list="[20, 50, 100]"
+      :limit.sync="pagination.limit"
+      :page.sync="pagination.page"
+      @change="getPaginatedData"
+    />
     <festival-modal :festival-id="editFestivalId" />
   </div>
 </template>
@@ -100,25 +108,48 @@
 import { mapState, mapActions } from 'vuex';
 import FestivalModal from '@components/admin/festival/FestivalModal';
 import { continents, countries } from 'countries-list';
+import AdminSearch from '@views/admin/AdminSearch';
+import { debounce } from 'lodash/function';
 
 export default {
   name: 'AdminGenres',
-  components: { FestivalModal },
+  components: { AdminSearch, FestivalModal },
   data() {
     return {
       editFestivalId: null,
-      selected: []
+      selected: [],
+      search: '',
+      pagination: {
+        page: 1,
+        limit: 20,
+      },
+      debouncedGetData: () => {}
     };
   },
   computed: {
-    ...mapState('admin/festival', ['festivals']),
+    ...mapState('admin/festival', ['festivalsList', 'festivalsCount']),
   },
   created() {
-    this.a_getFestivalsList();
+    this.getPaginatedData();
+    this.debouncedGetData = debounce(() => {
+      this.getPaginatedData();
+    }, 400);
   },
   methods: {
     ...mapActions('admin/festival', ['a_getFestivalsList', 'a_createFestival', 'a_updateFestival', 'a_deleteFestivals']),
     ...mapActions('modals', ['a_openModal']),
+    handleSearch(search) {
+      this.search = search;
+      this.debouncedGetData();
+    },
+    getPaginatedData() {
+      const params = {
+        page: this.pagination.page,
+        limit: this.pagination.limit,
+        search: this.search
+      };
+      this.a_getFestivalsList(params);
+    },
     handleSelect(value) {
       this.selected = value;
     },
@@ -132,8 +163,8 @@ export default {
       this.editFestivalId = null;
       this.a_openModal('festivalCRUD');
     },
-    doEdit(genreId) {
-      this.editFestivalId = genreId;
+    doEdit(festivalId) {
+      this.editFestivalId = festivalId;
       this.a_openModal('festivalCRUD');
     },
     doDelete(id) {
