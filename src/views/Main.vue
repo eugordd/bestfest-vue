@@ -26,31 +26,22 @@
         </div>
         <br>
         <div>
-          <el-tag
+          <artist-tag
             v-for="(artist, index) in selectedArtists"
             :key="artist._id"
-            :disable-transitions="false"
-            effect="dark"
-            class="artist-tag"
-            :size="artistSize(artist.priority)"
-            :type="artistType(artist.priority)"
-            closable
+            :artist="artist.name"
+            :priority="artist.priority"
+            :selected="true"
+            :closable="true"
             @click="raiseArtistPriority(index)"
             @close="unselectArtist(index)"
-          >
-            {{ artist.name }}
-          </el-tag>
-          <el-tag
+          />
+          <artist-tag
             v-for="artist in showedArtists"
             :key="artist._id"
-            :disable-transitions="false"
-            class="artist-tag"
-            effect="plain"
-            size="small"
+            :artist="artist.name"
             @click="selectArtist(artist)"
-          >
-            {{ artist.name }}
-          </el-tag>
+          />
         </div>
         <br>
         <div>
@@ -76,10 +67,11 @@ import ArtistAPI from '@api/app/ArtistAPI';
 import { debounce } from 'lodash/function';
 import { mapActions, mapState } from 'vuex';
 import FestivalsRating from '@components/main/FestivalsRating';
+import ArtistTag from '@components/main/ArtistTag';
 
 export default {
   name: 'Main',
-  components: { FestivalsRating, ContinentsMap, UiContainer, AppHeader },
+  components: { ArtistTag, FestivalsRating, ContinentsMap, UiContainer, AppHeader },
   data() {
     return {
       artists: [],
@@ -182,11 +174,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .artist-tag {
-    cursor: pointer;
-    margin: 4px 4px;
-  }
-
   .main {
     &__container {
       display: flex;
