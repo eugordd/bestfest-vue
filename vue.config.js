@@ -20,7 +20,12 @@ module.exports = {
       app: './src/main.js'
     },
     devServer: {
-      port: 3000
+      port: 8080,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3000'
+        }
+      }
     },
     resolve: {
       modules: ['node_modules'],
