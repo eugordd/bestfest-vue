@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Main from '@views/Main';
+
 import Admin from '@views/admin/Admin';
 import AdminArtistsList from '@views/admin/AdminArtistsList';
 import AdminFestivalsList from '@views/admin/AdminFestivalsList';

@@ -9,20 +9,26 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: Nunito, sans-serif;
+  height: 100%;
+  font-family: Sora, sans-serif;
+  overflow-x: hidden;
 
   &.modal-opened {
     overflow: hidden;
   }
 
   textarea {
-    font-family: Nunito, sans-serif;
+    font-family: Sora, sans-serif;
   }
 
   input {
-    font-family: Nunito, sans-serif;
+    font-family: Sora, sans-serif;
   }
 }
 

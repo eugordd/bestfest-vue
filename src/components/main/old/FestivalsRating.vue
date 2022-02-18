@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import FestivalsRatingItem from '@components/main/FestivalsRatingItem';
+import FestivalsRatingItem from '@components/main/old/FestivalsRatingItem';
 export default {
   name: 'FestivalsRating',
   components: { FestivalsRatingItem },

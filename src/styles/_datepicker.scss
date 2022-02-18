@@ -1,0 +1,57 @@
+.bestfest-datepicker-dropdown {
+
+  .el-date-range-picker__header {
+    height: 40px;
+
+    div {
+      font-size: 30px !important;
+      color: #D23A3A;
+    }
+  }
+
+  .el-picker-panel__icon-btn {
+    font-size: 20px;
+    margin-top: 4px;
+  }
+
+  .el-icon-d-arrow-left {
+    margin-left: 8px;
+  }
+
+  .el-icon-d-arrow-right {
+    margin-right: 8px;
+  }
+
+  .cell {
+    font-size: 24px;
+    text-transform: uppercase;
+  }
+
+  .el-month-table td.today .cell {
+    color: #D23A3A;
+  }
+
+  .el-month-table td .cell:hover {
+    color: #D23A3A;
+  }
+
+  .el-month-table td.end-date .cell, .el-month-table td.start-date .cell {
+    background-color: #D23A3A;
+    color: white;
+    border-radius: 0;
+  }
+
+  .el-month-table td.end-date .cell, .el-month-table td.end-date .cell {
+    background-color: #D23A3A;
+    color: white;
+    border-radius: 0;
+  }
+
+  .el-month-table td.start-date div {
+    border-radius: 0;
+  }
+
+  .el-month-table td.end-date div {
+    border-radius: 0;
+  }
+}

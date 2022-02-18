@@ -1,5 +1,5 @@
 $container: 1440px;
-$container-padding: 15px;
+$container-padding: 125px;
 
 @mixin for-size($breakpoint) {
   @if $breakpoint == xs-only {

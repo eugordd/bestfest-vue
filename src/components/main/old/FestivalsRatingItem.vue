@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import ArtistTag from '@components/main/ArtistTag';
+import ArtistTag from '@components/main/old/ArtistTag';
 export default {
   name: 'FestivalsRatingItem',
   components: { ArtistTag },

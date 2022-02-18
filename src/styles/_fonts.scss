@@ -1,41 +1,55 @@
 @font-face {
-  font-family: 'Nunito';
-  src: url('~@assets/fonts/Nunito-Light.ttf') format('truetype');
+  font-family: 'Sora';
+  src: url('~@assets/fonts/sora/Sora-Thin.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: 'Sora';
+  src: url('~@assets/fonts/sora/Sora-ExtraLight.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'Sora';
+  src: url('~@assets/fonts/sora/Sora-Light.ttf') format('truetype');
   font-style: normal;
   font-weight: 300;
 }
 
 @font-face {
-  font-family: 'Nunito';
-  src: url('~@assets/fonts/Nunito-LightItalic.ttf') format('truetype');
-  font-style: italic;
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: 'Nunito';
-  src: url('~@assets/fonts/Nunito-Regular.ttf') format('truetype');
+  font-family: 'Sora';
+  src: url('~@assets/fonts/sora/Sora-Regular.ttf') format('truetype');
   font-style: normal;
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'Nunito';
-  src: url('~@assets/fonts/Nunito-Italic.ttf') format('truetype');
-  font-style: italic;
-  font-weight: 400;
+  font-family: 'Sora';
+  src: url('~@assets/fonts/sora/Sora-Medium.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 500;
 }
 
 @font-face {
-  font-family: 'Nunito';
-  src: url('~@assets/fonts/Nunito-Bold.ttf') format('truetype');
+  font-family: 'Sora';
+  src: url('~@assets/fonts/sora/Sora-SemiBold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Sora';
+  src: url('~@assets/fonts/sora/Sora-Bold.ttf') format('truetype');
   font-style: normal;
   font-weight: 700;
 }
 
 @font-face {
-  font-family: 'Nunito';
-  src: url('~@assets/fonts/Nunito-BoldItalic.ttf') format('truetype');
-  font-style: italic;
-  font-weight: 700;
+  font-family: 'Sora';
+  src: url('~@assets/fonts/sora/Sora-ExtraBold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 800;
 }

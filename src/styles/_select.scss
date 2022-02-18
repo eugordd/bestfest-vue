@@ -1,0 +1,13 @@
+.bestfest-select-dropdown {
+  .el-select-dropdown__item {
+    font-size: 24px;
+    line-height: 1;
+    text-transform: uppercase;
+    padding: 6px 8px;
+    height: auto;
+
+    &.selected {
+      color: #D23A3A;
+    }
+  }
+}
