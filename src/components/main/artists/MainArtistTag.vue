@@ -44,7 +44,6 @@ export default {
   .main-artist-tag {
     z-index: 10;
     display: inline-flex;
-    cursor: pointer;
     position: relative;
     text-transform: uppercase;
 
@@ -60,6 +59,7 @@ export default {
 
     &:not(.main-artist-tag--thumbnail).main-artist-tag {
       padding: 0 16px;
+      cursor: pointer;
 
       &:hover {
         .main-artist-tag__delete {

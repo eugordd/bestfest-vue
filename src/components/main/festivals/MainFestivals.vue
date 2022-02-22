@@ -51,6 +51,7 @@ export default {
     display: flex;
     flex-direction: column;
     margin-top: 40px;
+    height: 100%;
 
     &__tags {
       display: flex;
@@ -62,11 +63,10 @@ export default {
       text-transform: uppercase;
       cursor: pointer;
       padding: 0 16px;
+      opacity: .3;
 
       &--active {
-        color: $main-color;
         opacity: 1;
-        text-decoration: underline;
       }
     }
   }

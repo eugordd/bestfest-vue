@@ -22,9 +22,7 @@
           />
         </div>
       </div>
-      <div class="main-chosen__title">
-        Your Top&nbsp;5 Festivals
-      </div>
+      <div class="main-chosen__title" />
     </ui-container>
   </div>
 </template>
