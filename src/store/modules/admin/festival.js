@@ -32,28 +32,59 @@ const actions = {
     const { festivals, pagination } = data;
     commit('m_setFestivals', { festivals, count: pagination?.total,  });
   },
-  async a_createFestival({ dispatch }, { name, description, country, place, dateStart, dateEnd, genres, artists }) {
+  async a_createFestival({ dispatch }, {
+    name,
+    shortName,
+    description,
+    country,
+    place,
+    dateStart,
+    dateEnd,
+    imageUrl,
+    website,
+    genres,
+    artists
+  }) {
     const payload = {
       name,
+      shortName,
       description,
       country,
       place,
       dateStart,
       dateEnd,
+      imageUrl,
+      website,
       genres,
       artists
     };
     const { data } = await FestivalAPI.create({ payload });
     dispatch('a_getFestivalsList');
   },
-  async a_updateFestival({ dispatch }, { id, name, description, country, place, dateStart, dateEnd, genres, artists }) {
+  async a_updateFestival({ dispatch }, {
+    id,
+    name,
+    shortName,
+    description,
+    country,
+    place,
+    dateStart,
+    dateEnd,
+    imageUrl,
+    website,
+    genres,
+    artists
+  }) {
     const payload = {
       name,
+      shortName,
       description,
       country,
       place,
       dateStart,
       dateEnd,
+      imageUrl,
+      website,
       genres,
       artists
     };

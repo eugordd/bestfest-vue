@@ -9,6 +9,9 @@
       <el-form-item label="Name">
         <el-input v-model="form.name" />
       </el-form-item>
+      <el-form-item label="Short Name">
+        <el-input v-model="form.shortName" />
+      </el-form-item>
       <el-form-item label="Description">
         <el-input
           type="textarea"
@@ -50,6 +53,12 @@
       </el-form-item>
       <el-form-item label="Place">
         <el-input v-model="form.place" />
+      </el-form-item>
+      <el-form-item label="Image Url">
+        <el-input v-model="form.imageUrl" />
+      </el-form-item>
+      <el-form-item label="Website">
+        <el-input v-model="form.website" />
       </el-form-item>
       <el-form-item>
         <el-date-picker
@@ -116,9 +125,12 @@ export default {
       modalName: 'festivalCRUD',
       form: {
         name: '',
+        shortName: '',
         description: '',
         country: '',
         place: '',
+        imageUrl: '',
+        website: '',
         period: [],
         genres: [],
         artists: []
@@ -149,14 +161,30 @@ export default {
       this.getData();
 
       if (this.festivalId) {
-        const { festival: { artists, country, dateEnd, dateStart, description, genres, name, place } } =
-          await this.a_getFestival({ id: this.festivalId });
+        const {
+          festival: {
+            artists,
+            country,
+            dateEnd,
+            dateStart,
+            description,
+            genres,
+            name,
+            shortName,
+            place,
+            imageUrl,
+            website
+          }
+        } = await this.a_getFestival({ id: this.festivalId });
 
         this.form = {
           name,
+          shortName,
           description,
           country,
           place,
+          imageUrl,
+          website,
           period: [dateStart, dateEnd],
           genres,
           artists: artists.map(item => item._id)
@@ -164,9 +192,12 @@ export default {
       } else {
         this.form = {
           name: '',
+          shortName: '',
           description: '',
           country: '',
           place: '',
+          imageUrl: '',
+          website: '',
           period: [],
           genres: [],
           artists: []
@@ -179,11 +210,14 @@ export default {
     async addFestival() {
       const payload = {
         name: this.form.name,
+        shortName: this.form.shortName,
         description: this.form.description,
         country: this.form.country,
         place: this.form.place,
         dateStart: this.form?.period[0],
         dateEnd: this.form?.period[1],
+        imageUrl: this.form?.imageUrl,
+        website: this.form?.website,
         genres: this.form.genres,
         artists: this.form.artists,
       };
@@ -193,11 +227,14 @@ export default {
     async editFestival() {
       const payload = {
         name: this.form.name,
+        shortName: this.form.shortName,
         description: this.form.description,
         country: this.form.country,
         place: this.form.place,
         dateStart: this.form?.period?.[0],
         dateEnd: this.form?.period?.[1],
+        imageUrl: this.form?.imageUrl,
+        website: this.form?.website,
         genres: this.form.genres,
         artists: this.form.artists,
         id: this.festivalId

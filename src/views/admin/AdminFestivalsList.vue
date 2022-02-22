@@ -17,6 +17,11 @@
         width="120"
       />
       <el-table-column
+        property="shortName"
+        label="Short Name"
+        width="120"
+      />
+      <el-table-column
         property="description"
         label="Description"
         width="400"
@@ -29,6 +34,16 @@
           <span>{{ formatCountry(scope.row.country) }}</span>
         </template>
       </el-table-column>
+      <el-table-column
+        property="imageUrl"
+        label="Image Url"
+        width="120"
+      />
+      <el-table-column
+        property="website"
+        label="Website"
+        width="120"
+      />
       <el-table-column
         property="genres"
         label="Genres"
