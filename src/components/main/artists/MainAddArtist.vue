@@ -72,7 +72,7 @@ export default {
     ::v-deep input {
       background: none;
       text-transform: uppercase;
-      font-size: $font-size-sm;
+      font-size: $font-size-md;
       border: none;
       caret-color: #D23A3A;
       color: #D23A3A;
@@ -81,7 +81,7 @@ export default {
         display: inline-flex;
         color: #D23A3A;
         text-decoration: underline;
-        font-size: $font-size-sm;
+        font-size: $font-size-md;
         cursor: pointer;
         z-index: 10;
       }

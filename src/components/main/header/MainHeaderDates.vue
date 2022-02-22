@@ -1,9 +1,8 @@
 <template>
   <div class="main-header-dates">
-    <!--    <ui-title text="1 dates" :interactive="true" />-->
     <el-date-picker
       class="main-header-dates__datepicker"
-      :class="{'main-header-dates__datepicker--inactive': !dateRange.length }"
+      :class="{'main-header-dates__datepicker--inactive': !dates.length }"
       type="monthrange"
       range-separator="–"
       start-placeholder="1 dates"
@@ -12,7 +11,8 @@
       format="MMM yy"
       :clearable="false"
       :editable="false"
-      v-model="dateRange"
+      :value="dates"
+      @input="$emit('update:dates', $event)"
     />
   </div>
 </template>
@@ -20,10 +20,11 @@
 <script>
 export default {
   name: 'MainDates',
-  data() {
-    return {
-      dateRange: []
-    };
+  props: {
+    dates: {
+      type: Array,
+      default: () => []
+    }
   }
 };
 </script>
@@ -55,7 +56,7 @@ export default {
       }
 
       & ::v-deep .el-range-separator {
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
         width: 30px;
         color: #D23A3A;
         line-height: 1;
@@ -66,7 +67,7 @@ export default {
         background-color: transparent !important;
         color: #D23A3A !important;
         text-transform: uppercase;
-        font-size: $font-size-lg;
+        font-size: $font-size-xl;
         width: 200px;
         cursor: pointer;
       }

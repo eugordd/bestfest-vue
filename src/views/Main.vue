@@ -1,14 +1,37 @@
 <template>
   <div class="main">
-    <div class="main__settings">
-      <main-header />
-      <main-artists
-        :artists="artists"
-        @update="updateArtists"
-      />
-    </div>
-    <div class="main__spacer" />
-    <main-find-festivals />
+    <transition name="fade" mode="out-in">
+      <div
+        v-if="isSettingsState"
+        :key="isSettingsState"
+        class="main__settings"
+      >
+        <main-header
+          :dates.sync="dates"
+          :place.sync="place"
+        />
+        <main-artists
+          :artists.sync="artists"
+        />
+        <transition name="fade">
+          <main-find-festivals
+            v-if="isFormFilled"
+            @click.native="findFestivals"
+          />
+        </transition>
+      </div>
+      <div v-else class="main__festivals">
+        <main-chosen
+          :dates="dates"
+          :place="place"
+          :artists="artists"
+          @change-state="isSettingsState = true;"
+        />
+        <main-festivals
+          :festivals="festivalsRatedList"
+        />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -16,47 +39,48 @@
 import MainHeader from '@components/main/header/MainHeader';
 import MainArtists from '@components/main/artists/MainArtists';
 import MainFindFestivals from '@components/main/festivals/MainFindFestivals';
+import MainChosen from '@components/main/chosen/MainChosen';
+import { mapActions, mapState } from 'vuex';
+import MainFestivals from '@components/main/festivals/MainFestivals';
 
 export default {
   name: 'MainNew',
-  components: { MainFindFestivals, MainArtists, MainHeader },
+  components: { MainFestivals, MainChosen, MainFindFestivals, MainArtists, MainHeader },
   data() {
     return {
-      dateRange: [],
+      dates: [],
       artists: [],
-      isFestivalsPage: false
+      place: '',
+      isSettingsState: true
     };
   },
+  computed: {
+    ...mapState('app/festival', ['festivalsRatedList']),
+    isFormFilled() {
+      return this.dates.length && this.artists.length && this.place;
+    }
+  },
   methods: {
-    updateArtists(artists) {
-      this.artists = artists;
+    ...mapActions('app/festival', ['a_findFestivals']),
+    async findFestivals() {
+      const payload = {
+        continents: [this.place],
+        dateStart: this.dates[0] || null,
+        dateEnd: this.dates[1] || null,
+        artists: this.artists.map(item => ({ _id: item._id, priority: item.priority }))
+      };
+      await this.a_findFestivals(payload);
+      this.isSettingsState = false;
     }
   }
 };
 </script>
 
 <style lang="scss">
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s ease;
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
   }
-
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
-  }
-
-  .festivals-enter-active {
-    transition: all 0.3s ease-out;
-  }
-
-  .festivals-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-  }
-
-  .festivals-enter-from,
-  .festivals-leave-to {
-    transform: translateX(20px);
+  .fade-enter, .fade-leave-to {
     opacity: 0;
   }
 </style>
@@ -73,18 +97,7 @@ export default {
     &__settings {
       display: flex;
       flex-direction: column;
-    }
-
-    &__spacer {
-      display: flex;
-      flex-grow: 1;
-    }
-
-    &__header {
-      &-container {
-        display: flex;
-        justify-content: space-between;
-      }
+      height: 100%;
     }
   }
 </style>

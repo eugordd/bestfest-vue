@@ -45,7 +45,7 @@ export default {
         priority: 1
       };
       const newArtistsList = [...this.artists, newArtist];
-      this.$emit('update', newArtistsList);
+      this.$emit('update:artists', newArtistsList);
       this.addArtistKey = Math.random().toString(36)
         .replace(/[^a-z]+/g, '')
         .substr(0, 5);
@@ -57,11 +57,11 @@ export default {
           item.priority = item.priority < 3 ? item.priority + 1 : 1;
         }
       });
-      this.$emit('update', newArtistsList);
+      this.$emit('update:artists', newArtistsList);
     },
     deleteArtist(artistId) {
       const newArtistsList = this.artists.filter(item => item._id !== artistId);
-      this.$emit('update', newArtistsList);
+      this.$emit('update:artists', newArtistsList);
     }
   }
 };

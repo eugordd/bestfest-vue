@@ -26,7 +26,7 @@ export default {
 <style scoped lang="scss">
   .ui-title {
     white-space: nowrap;
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
     line-height: 88px;
     color: #D23A3A;
     text-transform: uppercase;

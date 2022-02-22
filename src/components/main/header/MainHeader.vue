@@ -3,10 +3,14 @@
     <ui-container class="main-header__container">
       <main-header-dates
         class="main-header__item"
+        :dates="dates"
+        @update:dates="$emit('update:dates', $event)"
       />
       <div class="main-header__line" />
       <main-header-place
         class="main-header__item"
+        :place="place"
+        @update:place="$emit('update:place', $event)"
       />
     </ui-container>
   </div>
@@ -18,7 +22,17 @@ import MainHeaderPlace from '@components/main/header/MainHeaderPlace';
 
 export default {
   name: 'MainHeader',
-  components: { MainHeaderPlace, MainHeaderDates }
+  components: { MainHeaderPlace, MainHeaderDates },
+  props: {
+    dates: {
+      type: Array,
+      default: () => []
+    },
+    place: {
+      type: String,
+      default: ''
+    }
+  }
 };
 </script>
 
@@ -31,11 +45,11 @@ export default {
       justify-content: space-between;
       align-items: center;
     }
-
     &__item {
       display: flex;
       flex-wrap: nowrap;
     }
+
 
     &__line {
       display: flex;

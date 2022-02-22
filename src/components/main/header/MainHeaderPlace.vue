@@ -3,7 +3,8 @@
     <el-select
       placeholder="2 Place"
       popper-class="bestfest-select-dropdown"
-      v-model="place"
+      :value="place"
+      @input="$emit('update:place', $event)"
     >
       <el-option
         v-for="item in continents"
@@ -16,20 +17,19 @@
 </template>
 
 <script>
+import continents from '@global/continents';
 
 export default {
   name: 'MainPlace',
+  props: {
+    place: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
-      place: '',
-      continents: [
-        { name: 'africa', code: 'AF' },
-        { name: 'asia', code: 'AS' },
-        { name: 'europe', code: 'EU' },
-        { name: 'n. america', code: 'NA' },
-        { name: 's. america', code: 'SA' },
-        { name: 'oceania', code: 'OC' }
-      ]
+      continents
     };
   }
 };
@@ -38,7 +38,7 @@ export default {
 <style scoped lang="scss">
   .main-header-place {
     & ::v-deep .el-input {
-      font-size: $font-size-lg;
+      font-size: $font-size-xl;
       width: 310px;
     }
 
